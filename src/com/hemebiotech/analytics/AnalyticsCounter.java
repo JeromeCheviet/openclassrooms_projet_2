@@ -1,8 +1,6 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -22,31 +20,36 @@ public class AnalyticsCounter {
      * The data are register in the file "result.out"</p>
      */
     public static void main(String[] args) throws Exception {
-        //TODO create variable with path file.
-        BufferedReader reader = new BufferedReader(new FileReader("symptoms.txt"));
-        String line = reader.readLine();
+        String filePath = "symptoms.txt";
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+            String line = reader.readLine();
 
-        Map<String, Integer> symptoms = new TreeMap<>();
+            Map<String, Integer> symptoms = new TreeMap<>();
 
-        //TODO Change while to method
-        while (line != null) {
-            if (symptoms.containsKey(line)) {
-                int newCount = symptoms.get(line) + 1;
-                symptoms.put(line, newCount);
-            } else {
-                symptoms.put(line, 1);
+            //TODO Change while to method
+            while (line != null) {
+                if (symptoms.containsKey(line)) {
+                    int newCount = symptoms.get(line) + 1;
+                    symptoms.put(line, newCount);
+                } else {
+                    symptoms.put(line, 1);
+                }
+
+                line = reader.readLine();
             }
+            reader.close();
 
-            line = reader.readLine();
+            //TODO transform to method
+            FileWriter writer = new FileWriter("result.out");
+
+            for (Map.Entry<String, Integer> symptom : symptoms.entrySet()) {
+                writer.write(symptom.getKey() + " : " + symptom.getValue() + "\n");
+            }
+            writer.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("The file " + filePath + " do not exist !");
+            System.exit(-1);
         }
-        reader.close();
-
-        //TODO transform to method
-        FileWriter writer = new FileWriter("result.out");
-
-        for (Map.Entry<String, Integer> symptom : symptoms.entrySet()) {
-            writer.write(symptom.getKey() + " : " + symptom.getValue() + "\n");
-        }
-        writer.close();
     }
 }
