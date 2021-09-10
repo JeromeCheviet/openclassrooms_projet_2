@@ -22,23 +22,8 @@ public class AnalyticsCounter {
     public static void main(String[] args) throws Exception {
         String filePath = "symptoms.txt";
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(filePath));
-            String line = reader.readLine();
 
-            Map<String, Integer> symptoms = new TreeMap<>();
-
-            //TODO Change while to method
-            while (line != null) {
-                if (symptoms.containsKey(line)) {
-                    int newCount = symptoms.get(line) + 1;
-                    symptoms.put(line, newCount);
-                } else {
-                    symptoms.put(line, 1);
-                }
-
-                line = reader.readLine();
-            }
-            reader.close();
+            Map<String, Integer> symptoms = new ReadSymptomsFromFile().readSymptoms(filePath);
 
             //TODO transform to method
             FileWriter writer = new FileWriter("result.out");
