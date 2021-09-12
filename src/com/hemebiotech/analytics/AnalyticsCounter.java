@@ -1,8 +1,6 @@
 package com.hemebiotech.analytics;
 
-import java.io.*;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * <g>Class to count number of symptom in file symptoms.txt</g>
@@ -21,19 +19,16 @@ public class AnalyticsCounter {
      */
     public static void main(String[] args) throws Exception {
         String filePath = "symptoms.txt";
+        String resultPath = "result.out";
         try {
 
-            Map<String, Integer> symptoms = new ReadSymptomsFromFile().readSymptoms(filePath);
+            // Create a dictionary from a file.
+            Map symptoms = new ProccessSymptomsFromFile().readSymptoms(filePath);
+            // Write the dictionary into a file.
+            new ProccessSymptomsFromFile().writeSymptoms(resultPath, symptoms);
 
-            //TODO transform to method
-            FileWriter writer = new FileWriter("result.out");
-
-            for (Map.Entry<String, Integer> symptom : symptoms.entrySet()) {
-                writer.write(symptom.getKey() + " : " + symptom.getValue() + "\n");
-            }
-            writer.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("The file " + filePath + " do not exist !");
+        } catch (Exception e) {
+            System.out.println("an issue has occurred : "+ e);
             System.exit(-1);
         }
     }
