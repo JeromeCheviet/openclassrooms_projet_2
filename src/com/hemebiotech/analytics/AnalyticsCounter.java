@@ -1,6 +1,5 @@
 package com.hemebiotech.analytics;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,25 +21,11 @@ public class AnalyticsCounter {
     public static void main(String[] args) throws Exception {
         String filePath = "symptoms.txt";
         String resultPath = "result.out";
-        try {
-            //ReadSymptomDataFromFile symptomList = new ReadSymptomDataFromFile(filePath);
-            //List<String> symptomList = new ReadSymptomDataFromFile(filePath);
-            //symptomList.GetSymptoms();
-            List<String> symptomsList = new ProccessSymptomsFromFile().makeList(filePath);
-
-            for (String list: symptomsList){
-                System.out.println(list);
-            }
-
-            // Create a dictionary from a file.
-            Map symptoms = new ProccessSymptomsFromFile().readSymptoms(symptomsList);
-            // Write the dictionary into a file.
-            //new ProccessSymptomsFromFile().writeSymptoms(resultPath, symptoms);
-            new WriteSymptomsInFile().writeSymptoms(resultPath, symptoms);
-
-        } catch (Exception e) {
-            System.out.println("an issue has occurred : "+ e);
-            System.exit(-1);
-        }
+        // Create list with symptoms from a file.
+        List<String> symptomsList = new ReadSymptomsFromFile().readSymptoms(filePath);
+        // Create a dictionary from symptoms's list.
+        Map symptoms = new ProccessSymptoms().sortSymptoms(symptomsList);
+        // Write the dictionary into a file
+        new WriteSymptomsInFile().writeSymptoms(resultPath, symptoms);
     }
 }

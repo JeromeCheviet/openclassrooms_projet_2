@@ -5,7 +5,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
-public class WriteSymptomsInFile implements writable{
+/**
+ * <b>Class to write symptoms in alphabetical order in a file.</b>
+ */
+public class WriteSymptomsInFile implements Writable{
+
+    /**
+     * <p>This method write all occurrence of each symptom contain in a dictionary in alphabetical order.</p>
+     * <p>If they are some issue with the file, the application is stopped.</p>
+     *
+     * @param resultPath is the path where the list of symptoms and the number of occurrences are written.
+     * @param symptoms is the raw dictionary contains all symptoms and number of occurrence for each.
+     */
     @Override
     public void writeSymptoms(String resultPath, Map<String, Integer> symptoms) {
         try {
